@@ -16,27 +16,33 @@ export async function getBartlebyResponse(
 
   await new Promise((resolve) => setTimeout(resolve, totalDelay))
 
-  switch (tier) {
-    case 'free':
-      return {
-        content: 'I prefer not to.',
-        delay: totalDelay,
-      }
-    case 'premium':
-      return {
-        content: 'I especially prefer not to.',
-        delay: totalDelay,
-      }
-    case 'executive':
-      return {
-        content: null, // Absolute silence
-        delay: totalDelay,
-      }
-    default:
-      return {
-        content: 'I prefer not to.',
-        delay: totalDelay,
-      }
+  // Refusal logic stub with some variety
+  let reply: string | null = "I prefer not to."
+
+  if (tier === 'free') {
+    const freeResponses = [
+      "I prefer not to.",
+      "I would prefer not to.",
+      "At present I prefer to give no answer.",
+      "I am not particular.",
+    ]
+    reply = freeResponses[Math.floor(Math.random() * freeResponses.length)]
+  } else if (tier === 'premium') {
+    const premiumResponses = [
+      "I especially prefer not to.",
+      "I would prefer not to be too collaborative just now.",
+      "I prefer not to make any changes to my position.",
+      "I must decline to be reasonable about this matter.",
+    ]
+    reply = premiumResponses[Math.floor(Math.random() * premiumResponses.length)]
+  } else if (tier === 'executive') {
+    // Executive tier: absolute silence
+    reply = null
+  }
+
+  return {
+    content: reply,
+    delay: totalDelay,
   }
 }
 
@@ -48,7 +54,7 @@ export const SUBSCRIPTION_PLANS = {
     response: 'I prefer not to.',
   },
   premium: {
-    name: 'Premium',
+    name: 'Premium', 
     price: 20,
     description: 'Enhanced refusal',
     response: 'I especially prefer not to.',

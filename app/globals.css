@@ -145,3 +145,86 @@
     border-radius: var(--radius);
   }
 }
+
+/* Mobile-specific optimizations */
+@media (max-width: 640px) {
+  /* Improve touch targets */
+  button, [role="button"], input, textarea, select {
+    min-height: 44px;
+  }
+  
+  /* Prevent zoom on input focus */
+  input, textarea, select {
+    font-size: 16px;
+  }
+  
+  /* Improve scrolling on mobile */
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Fix viewport height issues */
+  .h-screen {
+    height: 100vh;
+    height: 100dvh; /* Use dynamic viewport height where supported */
+  }
+  
+  /* Ensure proper text wrapping */
+  .break-words {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  /* Improve focus indicators on mobile */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+}
+
+/* Touch-specific styles */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .hover\:bg-accent:hover {
+    background-color: initial;
+  }
+  
+  .hover\:opacity-80:hover {
+    opacity: initial;
+  }
+  
+  /* Use active states instead */
+  button:active, [role="button"]:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Prevent text selection on UI elements */
+.select-none {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Add to existing scrollbar styles */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Utility classes */
+.touch-manipulation {
+  touch-action: manipulation;
+}

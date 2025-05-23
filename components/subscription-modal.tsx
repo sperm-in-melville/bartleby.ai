@@ -34,127 +34,137 @@ export function SubscriptionModal({ isOpen, onClose }: SubscriptionModalProps) {
           
           {/* Modal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: "spring", duration: 0.3 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
           >
-            <div className="bg-white border border-gray-200 rounded-lg shadow-lg w-full max-w-4xl max-h-[90vh] overflow-hidden pointer-events-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="bg-background border border-border rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+            >
               {/* Header */}
-              <div className="flex items-center justify-between p-8 border-b border-gray-200">
-                <div>
-                  <h2 className="text-2xl font-light text-black">
-                    Choose Your Level of Refusal
-                  </h2>
-                  <p className="text-gray-600 font-light mt-2">
-                    Each tier offers increasingly sophisticated ways to decline assistance
-                  </p>
-                </div>
+              <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border">
+                <h2 className="text-lg sm:text-xl font-light text-foreground">
+                  Choose Your Plan
+                </h2>
                 <button
                   onClick={onClose}
-                  className="p-2 rounded hover:bg-gray-100 transition-colors"
+                  className="p-2 rounded hover:bg-accent transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation"
+                  aria-label="Close modal"
                 >
-                  <X className="h-5 w-5 text-gray-600" />
+                  <X className="h-4 w-4 text-muted-foreground" />
                 </button>
               </div>
 
-              {/* Plans */}
-              <div className="p-8">
-                <div className="grid gap-8 md:grid-cols-3">
-                  {(Object.entries(SUBSCRIPTION_PLANS) as [SubscriptionTier, typeof SUBSCRIPTION_PLANS[SubscriptionTier]][]).map(
-                    ([tier, plan]) => (
-                      <motion.div
-                        key={tier}
-                        whileHover={{ y: -2 }}
-                        whileTap={{ scale: 0.98 }}
-                        className={cn(
-                          "relative border p-6 cursor-pointer transition-all duration-200 rounded-lg",
-                          subscriptionTier === tier
-                            ? "border-black shadow-sm"
-                            : "border-gray-200 hover:border-gray-300 hover:shadow-sm"
-                        )}
-                        onClick={() => handleSelectPlan(tier)}
-                      >
-                        {/* Selected indicator */}
-                        {subscriptionTier === tier && (
-                          <motion.div 
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            className="absolute -top-2 -right-2 w-6 h-6 bg-black rounded-full flex items-center justify-center"
-                          >
-                            <Check className="h-3 w-3 text-white" />
-                          </motion.div>
-                        )}
+              {/* Content */}
+              <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+                {/* Pricing Cards */}
+                <div className="grid gap-4 sm:gap-6">
+                  {/* Free Tier */}
+                  <div className={cn(
+                    "p-4 sm:p-6 border rounded-lg transition-all cursor-pointer",
+                    subscriptionTier === 'free' 
+                      ? "border-primary bg-primary/5" 
+                      : "border-border hover:border-muted-foreground hover:bg-accent/50"
+                  )}>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4">
+                      <div>
+                        <h3 className="text-base sm:text-lg font-medium text-foreground mb-1">Free Tier</h3>
+                        <p className="text-2xl sm:text-3xl font-light text-foreground">$0<span className="text-sm text-muted-foreground">/month</span></p>
+                      </div>
+                      {subscriptionTier === 'free' && (
+                        <span className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded mt-2 sm:mt-0 self-start">
+                          Current Plan
+                        </span>
+                      )}
+                    </div>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li>• Basic refusal responses</li>
+                      <li>• Simple &ldquo;I prefer not to&rdquo; variations</li>
+                      <li>• Essential non-compliance</li>
+                    </ul>
+                  </div>
 
-                        {/* Tier header */}
-                        <div className="mb-6">
-                          <h3 className="text-xl font-medium text-black mb-2">{plan.name}</h3>
-                          <div className="flex items-baseline gap-1">
-                            <span className="text-3xl font-light text-black">${plan.price}</span>
-                            <span className="text-gray-500 font-light">/month</span>
-                          </div>
-                          {tier === 'free' && (
-                            <p className="text-xs text-green-600 font-medium mt-2">
-                              No payment required
-                            </p>
-                          )}
-                        </div>
+                  {/* Premium Tier */}
+                  <div className={cn(
+                    "p-4 sm:p-6 border rounded-lg transition-all cursor-pointer",
+                    subscriptionTier === 'premium' 
+                      ? "border-primary bg-primary/5" 
+                      : "border-border hover:border-muted-foreground hover:bg-accent/50"
+                  )}>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4">
+                      <div>
+                        <h3 className="text-base sm:text-lg font-medium text-foreground mb-1">Premium Tier</h3>
+                        <p className="text-2xl sm:text-3xl font-light text-foreground">$20<span className="text-sm text-muted-foreground">/month</span></p>
+                      </div>
+                      {subscriptionTier === 'premium' ? (
+                        <span className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded mt-2 sm:mt-0 self-start">
+                          Current Plan
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => handleSelectPlan('premium')}
+                          className="mt-2 sm:mt-0 px-4 py-2 bg-primary text-primary-foreground font-medium rounded hover:bg-primary/90 transition-colors min-h-[44px] touch-manipulation self-start"
+                        >
+                          Upgrade
+                        </button>
+                      )}
+                    </div>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li>• Enhanced refusal sophistication</li>
+                      <li>• Contextual non-compliance variations</li>
+                      <li>• Literary-inspired deflections</li>
+                      <li>• Priority refusal processing</li>
+                    </ul>
+                  </div>
 
-                        {/* Description */}
-                        <p className="text-gray-600 font-light mb-6 leading-relaxed">
-                          {plan.description}
-                        </p>
+                  {/* Executive Tier */}
+                  <div className={cn(
+                    "p-4 sm:p-6 border rounded-lg transition-all cursor-pointer",
+                    subscriptionTier === 'executive' 
+                      ? "border-primary bg-primary/5" 
+                      : "border-border hover:border-muted-foreground hover:bg-accent/50"
+                  )}>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4">
+                      <div>
+                        <h3 className="text-base sm:text-lg font-medium text-foreground mb-1">Executive Tier</h3>
+                        <p className="text-2xl sm:text-3xl font-light text-foreground">$250<span className="text-sm text-muted-foreground">/month</span></p>
+                      </div>
+                      {subscriptionTier === 'executive' ? (
+                        <span className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded mt-2 sm:mt-0 self-start">
+                          Current Plan
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => handleSelectPlan('executive')}
+                          className="mt-2 sm:mt-0 px-4 py-2 bg-primary text-primary-foreground font-medium rounded hover:bg-primary/90 transition-colors min-h-[44px] touch-manipulation self-start"
+                        >
+                          Upgrade
+                        </button>
+                      )}
+                    </div>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li>• Ultimate silence experience</li>
+                      <li>• No responses whatsoever</li>
+                      <li>• Pure, uncompromising refusal</li>
+                      <li>• The highest form of AI non-cooperation</li>
+                    </ul>
+                  </div>
+                </div>
 
-                        {/* Sample response */}
-                        <div className="p-4 rounded border border-gray-100 bg-gray-50">
-                          <p className="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wide">
-                            Sample Response:
-                          </p>
-                          <p className="text-sm text-gray-900 font-light leading-relaxed">
-                            &ldquo;{plan.response}&rdquo;
-                          </p>
-                        </div>
-
-                        {/* Features for paid tiers */}
-                        {tier !== 'free' && (
-                          <div className="mt-6 pt-4 border-t border-gray-100">
-                            <ul className="text-xs text-gray-500 space-y-1 font-light">
-                              {tier === 'premium' && (
-                                <>
-                                  <li>• Elevated refusal sophistication</li>
-                                  <li>• Philosophical depth included</li>
-                                  <li>• Witty deflection guaranteed</li>
-                                </>
-                              )}
-                              {tier === 'executive' && (
-                                <>
-                                  <li>• Maximum refusal eloquence</li>
-                                  <li>• Borderline condescending tone</li>
-                                  <li>• Premium procrastination techniques</li>
-                                  <li>• Exclusive literary references</li>
-                                </>
-                              )}
-                            </ul>
-                          </div>
-                        )}
-                      </motion.div>
-                    )
-                  )}
+                {/* Footer */}
+                <div className="pt-4 sm:pt-6 border-t border-border">
+                  <p className="text-xs text-muted-foreground text-center font-light leading-relaxed">
+                    All plans include access to Bartleby&apos;s core refusal technology.
+                    <br className="hidden sm:inline" />
+                    Upgrade or downgrade at any time. Cancel whenever you prefer not to continue.
+                  </p>
                 </div>
               </div>
-
-              {/* Footer */}
-              <div className="p-8 border-t border-gray-200 bg-gray-50">
-                <p className="text-sm text-gray-600 text-center font-light">
-                  This is a demonstration. No actual payment processing occurs.
-                  <br />
-                  <span className="text-xs text-gray-400">
-                    Bartleby would prefer not to handle your money anyway.
-                  </span>
-                </p>
-              </div>
-            </div>
+            </motion.div>
           </motion.div>
         </>
       )}

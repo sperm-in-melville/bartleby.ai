@@ -39,28 +39,28 @@ export function Header() {
   return (
     <>
       <header className="bg-background border-b border-border sticky top-0 z-50">
-        <div className="container mx-auto px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+        <div className="container mx-auto px-4 sm:px-8 h-14 sm:h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2 sm:gap-4">
             {/* Logo - matching the landing page style */}
             <button
               onClick={handleLogoClick}
-              className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer"
+              className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity cursor-pointer min-h-[44px] touch-manipulation"
               aria-label="Return to homepage"
             >
-              <EmptyChairIcon className="h-6 w-6 text-foreground" />
-              <h1 className="text-xl font-light text-foreground tracking-tight">
+              <EmptyChairIcon className="h-5 w-5 sm:h-6 sm:w-6 text-foreground" />
+              <h1 className="text-lg sm:text-xl font-light text-foreground tracking-tight">
                 Bartleby.ai
               </h1>
             </button>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             {/* Subscription Tier Badge */}
             {isAuthenticated && (
               <button
                 onClick={() => setShowSubscription(true)}
                 className={cn(
-                  "text-xs font-medium px-3 py-1.5 rounded border transition-colors",
+                  "text-xs font-medium px-2 sm:px-3 py-1 sm:py-1.5 rounded border transition-colors min-h-[32px] touch-manipulation",
                   "text-muted-foreground bg-muted border-border"
                 )}
               >
@@ -73,7 +73,7 @@ export function Header() {
             {/* Theme Toggle */}
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 rounded hover:bg-accent transition-colors"
+              className="p-2 rounded hover:bg-accent transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
@@ -85,7 +85,7 @@ export function Header() {
 
             {/* User Actions */}
             {isAuthenticated ? (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <div className="hidden sm:flex flex-col items-end">
                   <span className="text-xs font-medium text-foreground">
                     {userEmail?.split('@')[0]}
@@ -96,7 +96,7 @@ export function Header() {
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="p-2 rounded hover:bg-destructive/10 hover:text-destructive transition-colors"
+                  className="p-2 rounded hover:bg-destructive/10 hover:text-destructive transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation"
                   aria-label="Logout"
                 >
                   <LogOut className="h-4 w-4" />
@@ -105,10 +105,10 @@ export function Header() {
             ) : (
               <button
                 onClick={() => setShowAuth(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-medium rounded hover:bg-primary/90 transition-colors"
+                className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 bg-primary text-primary-foreground font-medium rounded hover:bg-primary/90 transition-colors min-h-[44px] touch-manipulation"
               >
                 <User className="h-4 w-4" />
-                <span>Sign in</span>
+                <span className="hidden sm:inline">Sign in</span>
               </button>
             )}
           </div>
